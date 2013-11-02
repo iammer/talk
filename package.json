@@ -1,0 +1,20 @@
+{
+  "name": "talk",
+  "version": "0.0.1",
+  "description": "Node chat program",
+  "main": "index.js",
+  "dependencies": {
+	"express": "3.x",
+	"socket.io": "0.9",
+	"underscore": "1.5.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "keywords": [
+    "chat"
+  ],
+  "author": "Michael Ratliff",
+  "license": "GPLv2 or Later"
+}

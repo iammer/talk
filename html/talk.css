@@ -1,0 +1,51 @@
+#connectedMessage {
+	margin-top: 20px;
+	display: none;
+}
+
+#talkDiv {
+	display: none;
+}
+
+#loginFailed {
+	display: none;
+}
+
+#loginDiv {
+	border: 1px solid black;
+}
+
+.from {
+	color: black;
+}
+
+.messageText {
+	color: blue;
+	margin-left: 10px;
+}
+
+.fromSep {
+	color: DarkGoldenRod;
+	margin-left: 5px;
+}
+
+.message {
+	border-bottom: 1px solid DarkOliveGreen;
+}
+
+#pageDiv {
+	width: 300px;
+}
+
+#inBox {
+	width: 250px;
+}
+
+#subButton {
+	display: none;
+}
+
+#outDiv {
+	height: 300px;
+	overflow-y: auto;
+}

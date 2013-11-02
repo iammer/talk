@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Talk</title>
+		
+		<link rel="stylesheet" href="talk.css"/>
+		
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="jquery-1.10.2.min.js"></script>
+		<script src="talk.js"></script>
+	</head>
+	<body>
+		<div id="pageDiv">
+			<div id="loginDiv">
+				<div id="passwordMessage">Please log in</div>
+				<label for="username">Username: </label>
+				<input type="text" id="username"/><br/>
+				<label for="password">Password: </label>
+				<input type="password" id="password"/>
+				<input type="button" value="Log in" id="loginButton"/>
+				<div id="loginFailed">Your login is incorrect!</div>
+			</div>
+			<div id="talkDiv"/>
+				<div id="outDiv"></div>
+				<hr/>
+				<input type="text" id="inBox"/><input type="button" value="Submit" id="subButton"/>
+				<div id="loggedIn">Logged in: <span id="who">&nbsp;</span></div>
+			</div>
+			<div id="connectingMessage">Connecting....</div>
+			<div id="connectedMessage">Connected</div>
+		</div>
+	</body>
+</html>
