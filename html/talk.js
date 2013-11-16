@@ -58,10 +58,15 @@ $(document).ready(function() {
 		$('<span/>').addClass('messageText').text(data.msg).appendTo(messageDiv);
 		messageDiv.appendTo(outDiv);
 		outDiv.scrollTop(outDiv.prop('scrollHeight'));
-		console.log(user)
-		console.log(lastState);
+		
 		if (user.username!=data.from && lastState=='hidden' && $('#notify').is(':checked')) {
-			new Notification("Message from: " + data.from,{body: data.msg});
+			if (Notification) {
+				new Notification("Message from: " + data.from,{body: data.msg});
+			} else if (navigator.mozNotification) {
+				navigator.mozNotification.createMessage("Message from: " + data.from,data.msg);
+			} else {
+				alert('Message from: ' + data.from);
+			}
 		}
 	});
 	

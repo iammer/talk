@@ -71,5 +71,5 @@ config.getUser=function(username,password) {
 	})
 }
 
-server.listen(8081);
+server.listen(config.port || 8081);
 
