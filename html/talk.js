@@ -1,3 +1,6 @@
+var user;
+var lastState='visible';
+
 $(document).ready(function() {
 	var socket=io.connect();
 	var outDiv=$('#outDiv');
@@ -9,6 +12,9 @@ $(document).ready(function() {
 	$('#loginButton').click(function() {
 		$('#loginFailed').hide();
 		socket.emit('login',{username: $('#username').val(), password: $('#password').val() });
+		if (Notification && Notification.permission!='granted') {
+			Notification.requestPermission(function() {});
+		}
 	});
 	
 	$('#loginDiv input').on('keypress',function(e) {
@@ -22,6 +28,7 @@ $(document).ready(function() {
 			$('#loginDiv').hide();
 			$('#talkDiv').show();
 			inBox.focus();
+			user=data.user;
 		} else {
 			$('#loginFailed').show();
 		}
@@ -51,6 +58,11 @@ $(document).ready(function() {
 		$('<span/>').addClass('messageText').text(data.msg).appendTo(messageDiv);
 		messageDiv.appendTo(outDiv);
 		outDiv.scrollTop(outDiv.prop('scrollHeight'));
+		console.log(user)
+		console.log(lastState);
+		if (user.username!=data.from && lastState=='hidden' && $('#notify').is(':checked')) {
+			new Notification("Message from: " + data.from,{body: data.msg});
+		}
 	});
 	
 	socket.on('users',function(data) {
@@ -60,5 +72,13 @@ $(document).ready(function() {
 	
 	$('#username').focus();
 	
+	if (Visibility.isSupported()) {
+		console.log("Visibility is supported");
+		Visibility.change(function (e, state) {
+			console.log("visibility: " + state);
+			lastState=state;
+		});
+	}
+
 	//console.log('started');
 });

@@ -7,6 +7,8 @@
 		
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="jquery-1.10.2.min.js"></script>
+		<script src="visibility.core.js"></script>
+		<script src="visibility.fallback.js"></script>
 		<script src="talk.js"></script>
 	</head>
 	<body>
@@ -23,7 +25,12 @@
 			<div id="talkDiv"/>
 				<div id="outDiv"></div>
 				<hr/>
-				<input type="text" id="inBox"/><input type="button" value="Submit" id="subButton"/>
+				<input type="text" id="inBox"/>
+				<input type="button" value="Submit" id="subButton"/>
+				<br/>
+				<span labelfor="notify">Enable Notifications</span>
+				<input id="notify" type="checkbox" checked="checked"/>
+				
 				<div id="loggedIn">Logged in: <span id="who">&nbsp;</span></div>
 			</div>
 			<div id="connectingMessage">Connecting....</div>

@@ -2,31 +2,36 @@ var express=require('express');
 var http=require('http');
 var socketio=require('socket.io');
 var _=require('underscore');
-
+var fs=require('fs');
 
 var connections={};
 
-
+var config=JSON.parse(fs.readFileSync(__dirname+'/config.json'))
 
 var app=express();
 var server=http.createServer(app);
 var io=socketio.listen(server);
-
+	
 app.use(express.logger());
 app.use(express.compress());
 app.use('/',express.static(__dirname+'/html'));
+
+_.each(config.ioOpts,function(v,k) {
+	console.log('setting io option ' + k + ' to ' + v);
+	io.set(k,v);
+});
 
 io.on('connection',function(socket) {
 	console.log('Client connected');
 	socket.on('login',function(data) {
 		console.log('Trying to log in with: (' + data.username + ',' + data.password + ')');
-		if ( (data.username=='user1' && data.password=='changeme1')
-		   || (data.username=='user2' && data.password=='changeme2')) {
-			connections[data.username]={
+		var user=config.getUser(data.username,data.password);
+		if (user) {
+			connections[user.username]={
 				socket: socket
 			};
 		
-			var username=data.username;
+			var username=user.username;
 			socket.on('talk',function(data) {
 				data.from=username;
 				console.log(username + '-> ' + data.msg);
@@ -46,7 +51,7 @@ io.on('connection',function(socket) {
 				});
 			});
 			
-			socket.emit('login',{success: true});
+			socket.emit('login',{success: true, user: _.pick(user,'username')});
 			
 			var userList=_.keys(connections);
 			_.each(connections,function(v) {
@@ -59,6 +64,12 @@ io.on('connection',function(socket) {
 		}
 	});
 });
+
+config.getUser=function(username,password) {
+	return _.find(this.users,function(user) {
+		return username==user.username && password==user.password;
+	})
+}
 
 server.listen(8081);
 
